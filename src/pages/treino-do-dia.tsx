@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const diasDaSemana = ["segunda", "terca", "quarta", "quinta", "sexta", "sabado", "domingo"];
 
-// Cada semana tem A, B, C e HIIT conforme seus treinos
+// Protocolo de treinos por semana
 const protocolo = {
   1: {
     A: [
@@ -25,8 +25,7 @@ const protocolo = {
     ],
     HIIT: [
       "Bike: 20s forte / 40s leve × 10",
-      "ou",
-      "Remo: 30s forte / 2 min leve × 6",
+      "ou Remos: 30s forte / 2 min leve × 6",
       "Neuromuscular diário: marcha rápida, caminhada lateral, sit-to-stand explosivo"
     ]
   },
@@ -45,14 +44,13 @@ const protocolo = {
     ],
     C: [
       "Terra sumô – 3×4",
-      "Push press leve-moderado – 3×5",
+      "Push press leve‑moderado – 3×5",
       "Remada curvada – 3×6",
       "Farmer carry – 2×40s"
     ],
     HIIT: [
       "Elíptico: 15s sprint / 45s leve ×12",
-      "ou",
-      "Caminhada inclinada forte: 1 min forte / 2 min leve × 6",
+      "ou Caminhada inclinada: 1 min forte / 2 min leve × 6",
       "Neuromuscular diário: deslocamento lateral, mini agachamento explosivo"
     ]
   },
@@ -77,8 +75,7 @@ const protocolo = {
     ],
     HIIT: [
       "Bike: 10s sprint total / 50s descanso × 10–12",
-      "ou",
-      "Remo: 30s forte / 2 min leve × 8",
+      "ou Remos: 30s forte / 2 min leve × 8",
       "Neuromuscular diário: passos rápidos curtos, skips no chão"
     ]
   },
@@ -109,7 +106,7 @@ const protocolo = {
   }
 };
 
-// Mapeamento do seu ciclo
+// Mapeamento do ciclo semanal
 const cicloDias = {
   segunda: "A",
   terca: "HIIT",
@@ -124,6 +121,7 @@ export default function TreinoDoDia() {
   const [semana, setSemana] = useState(1);
   const [diaIndex, setDiaIndex] = useState(0);
 
+  // Carrega progresso salvo
   useEffect(() => {
     const savedWeek = localStorage.getItem("semanaAtual");
     const savedDay = localStorage.getItem("diaAtual");
@@ -135,21 +133,21 @@ export default function TreinoDoDia() {
   const dia = diasDaSemana[diaIndex];
   const tipoTreino = cicloDias[dia];
 
+  // Avança automaticamente ao concluir
   const concluir = () => {
-    // Se for descanso, apenas avança
     let nextDay = diaIndex + 1;
     let nextWeek = semana;
 
-    // Domingo → avança para a próxima semana
+    // Se acabou a semana → passa para a próxima
     if (nextDay > 6) {
       nextDay = 0;
       nextWeek = semana + 1;
 
-      // Depois da semana 4, recomeça
+      // Se passou da semana 4 → reinicia
       if (nextWeek > 4) nextWeek = 1;
     }
 
-    // Salva no localStorage
+    // Salva o progresso
     localStorage.setItem("semanaAtual", nextWeek.toString());
     localStorage.setItem("diaAtual", nextDay.toString());
 
@@ -193,6 +191,22 @@ export default function TreinoDoDia() {
         }}
       >
         Concluir
+      </button>
+
+      <button
+        onClick={() => (window.location.href = "/")}
+        style={{
+          marginTop: 12,
+          padding: "10px 16px",
+          background: "#94735A",
+          color: "#fff",
+          border: "none",
+          borderRadius: 6,
+          cursor: "pointer",
+          fontSize: 14
+        }}
+      >
+        Voltar ao Início
       </button>
     </div>
   );
