@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: #F4EDE4;
+  color: #94735A;
+}
+h1 {
+  color: #C46A4A;
+}
+a {
+  color: #C46A4A;
+  font-weight: bold;
+}
