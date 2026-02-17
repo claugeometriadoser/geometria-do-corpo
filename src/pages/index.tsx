@@ -1,16 +1,7 @@
 import { useEffect, useState } from "react";
 
-const diasDaSemana = ["segunda", "terca", "quarta", "quinta", "sexta", "sabado", "domingo"];
-
-const cicloDias = {
-  segunda: "A",
-  terca: "HIIT",
-  quarta: "B",
-  quinta: "HIIT",
-  sexta: "C",
-  sabado: "DESCANSO",
-  domingo: "DESCANSO"
-};
+const diasDaSemana = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"];
+const ciclo = ["A", "HIIT", "B", "HIIT", "C", "Descanso", "Descanso"];
 
 export default function Home() {
   const [semana, setSemana] = useState(1);
@@ -24,9 +15,6 @@ export default function Home() {
     if (savedDay) setDiaIndex(parseInt(savedDay));
   }, []);
 
-  const dia = diasDaSemana[diaIndex];
-  const tipoTreino = cicloDias[dia];
-
   const reiniciar = () => {
     localStorage.setItem("semanaAtual", "1");
     localStorage.setItem("diaAtual", "0");
@@ -35,48 +23,36 @@ export default function Home() {
   };
 
   return (
-    <div style={{ padding: 24 }}>
-      <h1>Geometria do Corpo</h1>
+    <div className="p-6 max-w-lg mx-auto text-[#5A4637] flex flex-col gap-6">
 
-      <h2>Status Atual</h2>
-      <p><b>Semana:</b> {semana}</p>
-      <p><b>Dia:</b> {dia.charAt(0).toUpperCase() + dia.slice(1)}</p>
+      <h1 className="text-3xl font-semibold text-center">Geometria do Corpo</h1>
 
-      <p>
-        <b>Treino de Hoje:</b>{" "}
-        {tipoTreino === "DESCANSO" ? "Descanso" : `Treino ${tipoTreino}`}
-      </p>
+      <div className="bg-[#F5EFE9] rounded-xl shadow-sm p-6 flex flex-col gap-3">
+        <p className="text-lg">
+          <span className="font-semibold text-[#674B3A]">Semana: </span>{semana}
+        </p>
+
+        <p className="text-lg">
+          <span className="font-semibold text-[#674B3A]">Dia: </span>{diasDaSemana[diaIndex]}
+        </p>
+
+        <p className="text-lg">
+          <span className="font-semibold text-[#674B3A]">Treino: </span>{ciclo[diaIndex]}
+        </p>
+      </div>
 
       <button
         onClick={() => (window.location.href = "/treino-do-dia")}
-        style={{
-          marginTop: 20,
-          padding: "12px 20px",
-          background: "#C46A4A",
-          color: "#fff",
-          border: "none",
-          borderRadius: 6,
-          cursor: "pointer",
-          fontSize: 16
-        }}
+        className="w-full py-3 rounded-lg bg-[#C46A4A] text-white text-lg shadow hover:bg-[#B15D40] transition"
       >
         Ir para o Treino do Dia
       </button>
 
       <button
         onClick={reiniciar}
-        style={{
-          marginTop: 12,
-          padding: "10px 16px",
-          background: "#94735A",
-          color: "#fff",
-          border: "none",
-          borderRadius: 6,
-          cursor: "pointer",
-          fontSize: 14
-        }}
+        className="w-full py-3 rounded-lg bg-[#94735A] text-white text-lg shadow hover:bg-[#81634F] transition"
       >
-        Reiniciar Ciclo
+        Reiniciar ciclo
       </button>
     </div>
   );
